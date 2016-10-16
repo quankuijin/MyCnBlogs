@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_writerinfo"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_margin="@dimen/item_inner_margin">
+
+        <TextView android:id="@+id/item_writerinfo_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="@dimen/item_writerinfo_item_maxwidth"
+            android:singleLine="true"/>
+
+        <TextView android:id="@+id/item_writerinfo_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="@dimen/item_writerinfo_item_maxwidth"
+            android:singleLine="true"
+            android:layout_marginLeft="@dimen/item_horizental_margin"/>
+
+        <TextView android:id="@+id/item_writerinfo_space"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/item_writerinfo_item_height"/>
+
+        <LinearLayout android:id="@+id/item_writerinfo_recommend"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/item_writerinfo_item_height"
+            android:orientation="horizontal">
+            <ImageView android:id="@+id/item_writerinfo_recommend_image"
+                android:layout_width="@dimen/item_writerinfo_item_image_width"
+                android:layout_height="@dimen/item_writerinfo_item_image_height"
+                android:contentDescription="@string/recommend"
+                android:src="@drawable/ic_writerinfo_recommend"/>
+            <TextView android:id="@+id/item_writerinfo_recommend_count"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/item_writerinfo_item_height"
+                android:text="@string/item_writerinfo_default_number"/>
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/item_writerinfo_readed"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/item_writerinfo_item_height"
+            android:orientation="horizontal">
+            <ImageView android:id="@+id/item_writerinfo_readed_image"
+                android:layout_width="@dimen/item_writerinfo_item_image_width"
+                android:layout_height="@dimen/item_writerinfo_item_image_height"
+                android:contentDescription="@string/readed"
+                android:src="@drawable/ic_writerinfo_readed"/>
+            <TextView android:id="@+id/item_writerinfo_readed_count"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/item_writerinfo_item_height"
+                android:text="@string/item_writerinfo_default_number"/>
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/item_writerinfo_reply"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/item_writerinfo_item_height"
+            android:orientation="horizontal">
+            <ImageView android:id="@+id/item_writerinfo_reply_image"
+                android:layout_width="@dimen/item_writerinfo_item_image_width"
+                android:layout_height="@dimen/item_writerinfo_item_image_height"
+                android:contentDescription="@string/reply"
+                android:src="@drawable/ic_writerinfo_reply"/>
+            <TextView android:id="@+id/item_writerinfo_reply_count"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/item_writerinfo_item_height"
+                android:text="@string/item_writerinfo_default_number"/>
+        </LinearLayout>
+</LinearLayout>

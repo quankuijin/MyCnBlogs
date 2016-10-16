@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MyCnBlogs</string>
+    <string name="person_image_hint">头像</string>
+    <string name="recommend">推荐</string>
+    <string name="item_writerinfo_default_number">0</string>
+    <string name="readed">阅读</string>
+    <string name="reply">回复</string>
+</resources>

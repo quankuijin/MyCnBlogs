@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item android:id="@+id/menu_my_blogs"
+            android:title="@string/my_blogs"
+            android:icon="@drawable/ic_myblogs"
+            android:showAsAction="withText"/>
+
+        <item android:id="@+id/menu_my_collections"
+            android:title="@string/my_collections"
+            android:icon="@drawable/ic_mycollections"
+            android:showAsAction="withText"/>
+    </group>
+
+    <group>
+        <item android:id="@+id/menu_settings"
+            android:title="@string/settings"
+            android:icon="@drawable/ic_settings"
+            android:showAsAction="withText"/>
+    </group>
+</menu>

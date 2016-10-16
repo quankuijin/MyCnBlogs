@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="my_blogs">我的博客</string>
+    <string name="my_collections">我的收藏</string>
+    <string name="settings">设置</string>
+    <string name="my_cn_blogs">博客园(CnBlogs)</string>
+    <string name="navigation_opened">关闭</string>
+    <string name="navigation_closed">打开</string>
+
+    <string name="fragment_home">首页</string>
+    <string name="fragment_recommend_blogs">推荐博文</string>
+    <string name="fragment_read_ranking">阅读排行</string>
+    <string name="fragment_recommend_writer">推荐博主</string>
+
+    <string name="cannot_access_mobile_network">无法访问移动网络，请在APP设置中允许访问移动网络！</string>
+    <string name="not_get_more_item_overview_model">没有更多的信息</string>
+</resources>
