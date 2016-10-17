@@ -1,11 +1,8 @@
-package com.example.kuijin.mycnblogs.presenter.page;
+package com.example.kuijin.mycnblogs.presenter.page.pageFragmentPresenter;
 
-import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -18,32 +15,31 @@ import com.example.kuijin.mycnblogs.common.disk.DiskManager;
 import com.example.kuijin.mycnblogs.common.language.MessageInfo;
 import com.example.kuijin.mycnblogs.common.network.INetwork;
 import com.example.kuijin.mycnblogs.common.network.NetworkManager;
-import com.example.kuijin.mycnblogs.model.ItemOverviewModel;
+import com.example.kuijin.mycnblogs.model.IItemOverviewModel;
 import com.example.kuijin.mycnblogs.presenter.page.recyclerview.RecyclerViewAdapter;
 import com.example.kuijin.mycnblogs.view.page.AbsPageFragment;
-import com.example.kuijin.mycnblogs.view.page.recyclerview.RecyclerViewItemDecoration;
 
 import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by kuijin on 2016/9/15.
+ * Created by kuijin on 2016/10/17.
  */
-public class PageFragmentPresenter implements IPageFragmentPresenter {
+public class HomePageFragmentPresenter implements IPageFragmentPresenter {
 
     private Context context;
     private AbsPageFragment fragment;
     private RecyclerViewAdapter adapter;
 
     private int lastPageIndex;
-//    private int pageIndex;
+    //    private int pageIndex;
     private int pageSize;
 
 //    private boolean refreshed = false;
 //    private int refreshedPageIndex;
 //    private List<ItemOverviewModel> listRefreshed = null;
 
-    public PageFragmentPresenter(Context context, AbsPageFragment fragment) {
+    public HomePageFragmentPresenter(Context context, AbsPageFragment fragment) {
         this.context = context;
         this.fragment = fragment;
         lastPageIndex = 1;
@@ -66,7 +62,7 @@ public class PageFragmentPresenter implements IPageFragmentPresenter {
 //        recyclerView.addItemDecoration(new RecyclerViewItemDecoration());
 
 
-        List<ItemOverviewModel> list = null;
+        List<IItemOverviewModel> list = null;
         try {
             list = getItemOverviewModelsFromDisk();
         } catch (IOException e) {
@@ -81,7 +77,7 @@ public class PageFragmentPresenter implements IPageFragmentPresenter {
 
         INetwork.ResponseItemOverviewModelListener responseItemOverviewModelListener = new INetwork.ResponseItemOverviewModelListener() {
             @Override
-            public void onResponse(List<ItemOverviewModel> list) {
+            public void onResponse(List<IItemOverviewModel> list) {
                 if (null == list) {
                     return;
                 }
@@ -93,7 +89,7 @@ public class PageFragmentPresenter implements IPageFragmentPresenter {
 //                    CnBlogsLog.write(e);
 //                }
 
-                List<ItemOverviewModel> listCache = getItemOverviewModelsFromCache(list);
+                List<IItemOverviewModel> listCache = getItemOverviewModelsFromCache(list);
 
                 if (null == listCache || 0 > listCache.size()) {
                     Toast.makeText(context,
@@ -118,8 +114,8 @@ public class PageFragmentPresenter implements IPageFragmentPresenter {
 
         INetwork.ResponseItemOverviewModelListener responseItemOverviewModelListener = new INetwork.ResponseItemOverviewModelListener() {
             @Override
-            public void onResponse(List<ItemOverviewModel> list) {
-                List<ItemOverviewModel> listCache = getItemOverviewModelsFromCache(list);
+            public void onResponse(List<IItemOverviewModel> list) {
+                List<IItemOverviewModel> listCache = getItemOverviewModelsFromCache(list);
 
                 if (null == listCache || 0 > listCache.size()) {
                     Toast.makeText(context,
@@ -144,8 +140,8 @@ public class PageFragmentPresenter implements IPageFragmentPresenter {
     public void more() {
         INetwork.ResponseItemOverviewModelListener responseItemOverviewModelListener = new INetwork.ResponseItemOverviewModelListener() {
             @Override
-            public void onResponse(List<ItemOverviewModel> list) {
-                List<ItemOverviewModel> listCache = getItemOverviewModelsFromCache(list);
+            public void onResponse(List<IItemOverviewModel> list) {
+                List<IItemOverviewModel> listCache = getItemOverviewModelsFromCache(list);
 
                 if (null == listCache || 0 > listCache.size()) {
                     Toast.makeText(context,
@@ -164,7 +160,7 @@ public class PageFragmentPresenter implements IPageFragmentPresenter {
     }
 
 
-    private List<ItemOverviewModel> getItemOverviewModelsFromDisk() throws IOException {
+    private List<IItemOverviewModel> getItemOverviewModelsFromDisk() throws IOException {
         String url = fragment.getUrl();
         if (TextUtils.isEmpty(url)) {
             CnBlogsLog.write("PageFragmentPresenter", "getItemOverviewModels",
@@ -172,7 +168,7 @@ public class PageFragmentPresenter implements IPageFragmentPresenter {
             return null;
         }
 
-        List<ItemOverviewModel> list = DiskManager.getItemOverviewModels(url);
+        List<IItemOverviewModel> list = DiskManager.getItemOverviewModels(url);
         return list;
     }
 
@@ -182,8 +178,8 @@ public class PageFragmentPresenter implements IPageFragmentPresenter {
     }
 
     private void getItemOverviewModels(int pageIndex,
-                                                          @NonNull INetwork.ResponseItemOverviewModelListener listener,
-                                                          @Nullable INetwork.ResponseErrorListener errorListener) {
+                                       @NonNull INetwork.ResponseItemOverviewModelListener listener,
+                                       @Nullable INetwork.ResponseErrorListener errorListener) {
 
         String url = fragment.getUrl();
         if (null == errorListener) {
@@ -215,7 +211,7 @@ public class PageFragmentPresenter implements IPageFragmentPresenter {
 
     }
 
-    private List<ItemOverviewModel> getItemOverviewModelsFromCache(List<ItemOverviewModel> list) {
+    private List<IItemOverviewModel> getItemOverviewModelsFromCache(List<IItemOverviewModel> list) {
         String url = fragment.getUrl();
         if (null == list || 0 > list.size()) {
             CnBlogsLog.write("ItemOverviewPresenter", "getItemOverviewModels",
@@ -226,7 +222,7 @@ public class PageFragmentPresenter implements IPageFragmentPresenter {
         return CacheManager.putItemOverviewModels(url, list);
     }
 
-    private void clearCache(String url, List<ItemOverviewModel> list) throws IOException {
+    private void clearCache(String url, List<IItemOverviewModel> list) throws IOException {
         if (TextUtils.isEmpty(url)) {
             CnBlogsLog.write("PageFragmentPresenter", "clearCache", "url is null or empty",
                     CnBlogsLog.LEVEL_ERROR);

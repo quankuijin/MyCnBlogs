@@ -16,6 +16,7 @@ import com.example.kuijin.mycnblogs.common.CnBlogsApplication;
 import com.example.kuijin.mycnblogs.common.CnBlogsLog;
 import com.example.kuijin.mycnblogs.common.config.ConfigManager;
 import com.example.kuijin.mycnblogs.common.xml.ItemOverviewModelXmlPullParser;
+import com.example.kuijin.mycnblogs.model.IItemOverviewModel;
 import com.example.kuijin.mycnblogs.model.ItemOverviewModel;
 
 import org.xmlpull.v1.XmlPullParserException;
@@ -81,7 +82,7 @@ public class NetworkVolley implements INetwork {
                             return;
                         }
 
-                        List<ItemOverviewModel> list = null;
+                        List<IItemOverviewModel> list = null;
                         try {
                             list = ItemOverviewModelXmlPullParser.getItemOverviewModels(response, "UTF_8");
                         } catch (XmlPullParserException e) {

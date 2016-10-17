@@ -2,6 +2,7 @@ package com.example.kuijin.mycnblogs.common.cache;
 
 import android.util.LruCache;
 
+import com.example.kuijin.mycnblogs.model.IItemOverviewModel;
 import com.example.kuijin.mycnblogs.model.ItemOverviewModel;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * Created by kuijin on 2016/9/17.
  */
-public class OverviewListCache extends LruCache<Integer, List<ItemOverviewModel>> {
+public class OverviewListCache extends LruCache<Integer, List<IItemOverviewModel>> {
 
     private int index = -1;
 
@@ -33,10 +34,10 @@ public class OverviewListCache extends LruCache<Integer, List<ItemOverviewModel>
     }
 
     @Override
-    protected int sizeOf(Integer key, List<ItemOverviewModel> value) {
+    protected int sizeOf(Integer key, List<IItemOverviewModel> value) {
         int size = 0;
 
-        for (ItemOverviewModel item : value) {
+        for (IItemOverviewModel item : value) {
             size += item.getSize();
         }
 
@@ -47,10 +48,10 @@ public class OverviewListCache extends LruCache<Integer, List<ItemOverviewModel>
         return  index;
     }
 
-    public void addItemIds(List<ItemOverviewModel> items) {
+    public void addItemIds(List<IItemOverviewModel> items) {
         List<String> list = new LinkedList<>();
 
-        for (ItemOverviewModel item : items) {
+        for (IItemOverviewModel item : items) {
             if (!listItemIds.contains(item.getId())) {
                 list.add(item.getId());
             }
@@ -66,11 +67,11 @@ public class OverviewListCache extends LruCache<Integer, List<ItemOverviewModel>
     }
 
     @Override
-    protected void entryRemoved(boolean evicted, Integer key, List<ItemOverviewModel> oldValue, List<ItemOverviewModel> newValue) {
+    protected void entryRemoved(boolean evicted, Integer key, List<IItemOverviewModel> oldValue, List<IItemOverviewModel> newValue) {
         super.entryRemoved(evicted, key, oldValue, newValue);
 
         List<String> delIds = new LinkedList<>();
-        for (ItemOverviewModel item : oldValue) {
+        for (IItemOverviewModel item : oldValue) {
             if (listItemIds.contains(item.getId())) {
                 delIds.add(item.getId());
             }
@@ -81,9 +82,9 @@ public class OverviewListCache extends LruCache<Integer, List<ItemOverviewModel>
         }
     }
 
-    public List<ItemOverviewModel> getAddedItemOverviewModels(List<ItemOverviewModel> list) {
-        List<ItemOverviewModel> listAdded = new LinkedList<>();
-        for (ItemOverviewModel item : list) {
+    public List<IItemOverviewModel> getAddedItemOverviewModels(List<IItemOverviewModel> list) {
+        List<IItemOverviewModel> listAdded = new LinkedList<>();
+        for (IItemOverviewModel item : list) {
             if (listItemIds.contains(item.getId())) {
                 listAdded.add(item);
             }

@@ -79,7 +79,6 @@ public class CacheDispatcher extends Thread {
     public void run() {
         if (DEBUG) VolleyLog.v("start new dispatcher");
         Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
-        //缓存初始化，会遍历整个缓存文件夹
         // Make a blocking call to initialize the cache.
         mCache.initialize();
 
@@ -87,10 +86,8 @@ public class CacheDispatcher extends Thread {
             try {
                 // Get a request from the cache triage queue, blocking until
                 // at least one is available.
-            	//获取请求
                 final Request<?> request = mCacheQueue.take();
                 request.addMarker("cache-queue-take");
-                //执行代码
                 // If the request has been canceled, don't bother dispatching it.
                 
                 if (request.isCanceled()) {

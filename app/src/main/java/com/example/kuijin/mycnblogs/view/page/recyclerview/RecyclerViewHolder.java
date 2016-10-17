@@ -10,10 +10,11 @@ import android.widget.TextView;
 
 import com.example.kuijin.mycnblogs.R;
 import com.example.kuijin.mycnblogs.common.TimeUtil;
+import com.example.kuijin.mycnblogs.model.IItemOverviewModel;
 import com.example.kuijin.mycnblogs.model.ItemOverviewModel;
-import com.example.kuijin.mycnblogs.presenter.page.IPageFragmentPresenter;
 import com.example.kuijin.mycnblogs.presenter.page.itemoverview.IItemOverviewPresenter;
 import com.example.kuijin.mycnblogs.presenter.page.itemoverview.ItemOverviewPresenterManager;
+import com.example.kuijin.mycnblogs.presenter.page.pageFragmentPresenter.IPageFragmentPresenter;
 
 /**
  * Created by kuijin on 2016/9/15.
@@ -69,7 +70,18 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder {
         return view;
     }
 
-    public void bindViewHolder(ItemOverviewModel item) {
+    public void bindViewHolder(IItemOverviewModel obj) {
+        if (null == obj) {
+            return;
+        }
+
+        ItemOverviewModel item = null;
+        if (obj instanceof ItemOverviewModel) {
+            item = (ItemOverviewModel) obj;
+        } else {
+            return;
+        }
+
         itemTitle.setText(item.getTitle());
         itemSummary.setText(item.getSummary());
         writerName.setText(item.getWriterName());

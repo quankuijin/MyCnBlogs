@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.example.kuijin.mycnblogs.common.CnBlogsLog;
 import com.example.kuijin.mycnblogs.common.config.ConfigManager;
 import com.example.kuijin.mycnblogs.common.disk.DiskManager;
+import com.example.kuijin.mycnblogs.model.IItemOverviewModel;
 import com.example.kuijin.mycnblogs.model.ItemOverviewModel;
 
 import java.io.IOException;
@@ -30,7 +31,7 @@ public class OverviewModuleCacheManager {
         return new OverviewModuleCacheManager();
     }
 
-    public List<ItemOverviewModel> getItemOverviewModels(String url) {
+    public List<IItemOverviewModel> getItemOverviewModels(String url) {
         if (TextUtils.isEmpty(url)) {
             return null;
         }
@@ -41,9 +42,9 @@ public class OverviewModuleCacheManager {
         }
 
         int index = overviewListCache.getMaxIndex();
-        List<ItemOverviewModel> listResult = null;
+        List<IItemOverviewModel> listResult = null;
         for (int i = 0; i < (index + 1); i ++) {
-            List<ItemOverviewModel> list = overviewListCache.get(i);
+            List<IItemOverviewModel> list = overviewListCache.get(i);
             if (null != list) {
                 if (null == listResult) {
                     listResult = list;
@@ -56,7 +57,7 @@ public class OverviewModuleCacheManager {
         return listResult;
     }
 
-    public List<ItemOverviewModel> putItemOverviewModels(String url, List<ItemOverviewModel> list) {
+    public List<IItemOverviewModel> putItemOverviewModels(String url, List<IItemOverviewModel> list) {
         if (TextUtils.isEmpty(url)) {
             return null;
         }
@@ -89,7 +90,7 @@ public class OverviewModuleCacheManager {
         }
     }
 
-    public void clearItemOverviewModelsCache(String url, List<ItemOverviewModel> list) {
+    public void clearItemOverviewModelsCache(String url, List<IItemOverviewModel> list) {
         //清除Cache中原有的信息，并将list中的信息添加到Cache中
         removeItemOverviewModels(url);
         putItemOverviewModels(url, list);

@@ -34,12 +34,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Calling {@link #add(Request)} will enqueue the given Request for dispatch,
  * resolving from either cache or network on a worker thread, and then delivering
  * a parsed response on the main thread.
- * RequestQueueÀà´æÔÚ2¸ö·Ç³£ÖØÒªµÄPriorityBlockingQueueÀàĞÍµÄ³ÉÔ±×Ö¶ÎmCacheQueue mNetworkQueue £¬¸ÃPriorityBlockingQueueÎªjava1.5²¢·¢¿âÌá¹©µÄĞÂÀà
- * ÆäÖĞÓĞ¼¸¸öÖØÒªµÄ·½·¨£¬±ÈÈçtake()Îª´Ó¶ÓÁĞÖĞÈ¡µÃ¶ÔÏó£¬Èç¹û¶ÓÁĞ²»´æÔÚ¶ÔÏó£¬½«»á±»×èÈû£¬Ö±µ½¶ÓÁĞÖĞ´æÔÚÓĞ¶ÔÏó£¬ÀàËÆÓÚLooper.loop()
- * 
- * ÊµÀı»¯Ò»¸örequest¶ÔÏó£¬µ÷ÓÃRequestQueue.add(request),¸ÃrequestÈç¹û²»ÔÊĞí±»»º´æ£¬½«»á±»Ìí¼ÓÖÁmNetworkQueue¶ÓÁĞÖĞ£¬´ı¶à¸öNetworkDispatcherÏß³Ìtake()È¡³ö¶ÔÏó
- * Èç¹û¸Ãrequest¿ÉÒÔ±»»º´æ£¬¸Ãrequest½«»á±»Ìí¼ÓÖÁmCacheQueue¶ÓÁĞÖĞ£¬´ımCacheDispatcherÏß³Ì´ÓmCacheQueue.take()È¡³ö¶ÔÏó£¬
- * Èç¹û¸ÃrequestÔÚmCacheÖĞ²»´æÔÚÆ¥ÅäµÄ»º´æÊ±£¬¸Ãrequest½«»á±»ÒÆ½»Ìí¼ÓÖÁmNetworkQueue¶ÓÁĞÖĞ£¬´ıÍøÂç·ÃÎÊÍê³Éºó£¬½«¹Ø¼üÍ·ĞÅÏ¢Ìí¼ÓÖÁmCache»º´æÖĞÈ¥£¡
  */
 public class RequestQueue {
 
@@ -67,13 +61,13 @@ public class RequestQueue {
 	private final Set<Request<?>> mCurrentRequests = new HashSet<Request<?>>();
 
 	/** The cache triage queue. 
-	 * »º´æ¶ÓÁĞ
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * */
 	private final PriorityBlockingQueue<Request<?>> mCacheQueue =
 			new PriorityBlockingQueue<Request<?>>();
 
 	/** The queue of requests that are actually going out to the network. 
-	 * ÍøÂç¶ÓÁĞ
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * */
 	private final PriorityBlockingQueue<Request<?>> mNetworkQueue =
 			new PriorityBlockingQueue<Request<?>>();
@@ -136,8 +130,8 @@ public class RequestQueue {
 
 	/**
 	 * Starts the dispatchers in this queue.
-	 * Èç¹û¸Ãrequest¿ÉÒÔ±»»º´æ£¬¸Ãrequest½«»á±»Ìí¼ÓÖÁmCacheQueue¶ÓÁĞÖĞ£¬´ımCacheDispatcherÏß³Ì´ÓmCacheQueue.take()È¡³ö¶ÔÏó£¬
-	 * Èç¹û¸ÃrequestÔÚmCacheÖĞ²»´æÔÚÆ¥ÅäµÄ»º´æÊ±£¬¸Ãrequest½«»á±»ÒÆ½»Ìí¼ÓÖÁmNetworkQueue¶ÓÁĞÖĞ£¬´ıÍøÂç·ÃÎÊÍê³Éºó£¬½«¹Ø¼üÍ·ĞÅÏ¢Ìí¼ÓÖÁmCache»º´æÖĞÈ¥£¡
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½requestï¿½ï¿½ï¿½Ô±ï¿½ï¿½ï¿½ï¿½æ£¬ï¿½ï¿½requestï¿½ï¿½ï¿½á±»ï¿½ï¿½ï¿½ï¿½ï¿½mCacheQueueï¿½ï¿½ï¿½ï¿½ï¿½Ğ£ï¿½ï¿½ï¿½mCacheDispatcherï¿½ß³Ì´ï¿½mCacheQueue.take()È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½requestï¿½ï¿½mCacheï¿½Ğ²ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½Ä»ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½requestï¿½ï¿½ï¿½á±»ï¿½Æ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mNetworkQueueï¿½ï¿½ï¿½ï¿½ï¿½Ğ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Éºó£¬½ï¿½ï¿½Ø¼ï¿½Í·ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½mCacheï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¥ï¿½ï¿½
 	 */
 	public void start() {
 		stop();  // Make sure any currently running dispatchers are stopped.
@@ -222,7 +216,7 @@ public class RequestQueue {
 
 	/**
 	 * Adds a Request to the dispatch queue.
-	 * ½«ÇëÇóÌí¼Óµ½¶ÓÁĞÖĞ
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * @param request The request to service
 	 * @return The passed-in request
 	 */
@@ -238,8 +232,8 @@ public class RequestQueue {
 		request.addMarker("add-to-queue");
 
 		// If the request is uncacheable, skip the cache queue and go straight to the network.
-		//Èç¹û²»ÔÊĞíÎª»º´æ¶ÓÁĞ£¬ÔòÎªÍøÂç¶ÓÁĞ
-		//Ä¬ÈÏ»º´æ
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ£ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		//Ä¬ï¿½Ï»ï¿½ï¿½ï¿½
 		if (!request.shouldCache()) {
 			mNetworkQueue.add(request);
 			return request;

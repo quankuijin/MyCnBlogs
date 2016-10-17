@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.kuijin.mycnblogs.R;
-import com.example.kuijin.mycnblogs.presenter.page.IPageFragmentPresenter;
+import com.example.kuijin.mycnblogs.presenter.page.pageFragmentPresenter.IPageFragmentPresenter;
 import com.example.kuijin.mycnblogs.view.page.recyclerview.RecyclerViewItemDecoration;
 
 /**

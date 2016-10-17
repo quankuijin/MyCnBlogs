@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.text.TextUtils;
 
 import com.example.kuijin.mycnblogs.common.CnBlogsApplication;
+import com.example.kuijin.mycnblogs.model.IItemOverviewModel;
 import com.example.kuijin.mycnblogs.model.ItemOverviewModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -101,7 +102,7 @@ public class DiskManager {
     /**
      * 从硬盘中获取ItemOverviewModel列表
      * */
-    public static List<ItemOverviewModel> getItemOverviewModels(String url) throws IOException {
+    public static List<IItemOverviewModel> getItemOverviewModels(String url) throws IOException {
         String path = getPath(ItemModelsPath);
         if (TextUtils.isEmpty(path)) {
             throw new FileNotFoundException("Path of ItemModels not found!");
@@ -112,7 +113,7 @@ public class DiskManager {
         if (null != info) {
             Gson gson = new Gson();
             Type type = new TypeToken<ArrayList<ItemOverviewModel>>(){}.getType();
-            List<ItemOverviewModel> list = gson.fromJson(info, type);
+            List<IItemOverviewModel> list = gson.fromJson(info, type);
             return list;
         }
 
@@ -122,7 +123,7 @@ public class DiskManager {
     /**
      * 向硬盘中存入ItemOverviewModel列表
      * */
-    public static boolean setItemOverviewListToDisk(String url, List<ItemOverviewModel> list) throws IOException {
+    public static boolean setItemOverviewListToDisk(String url, List<IItemOverviewModel> list) throws IOException {
         String path = getPath(ItemModelsPath);
         if (TextUtils.isEmpty(path)) {
             throw new FileNotFoundException("Path of ItemModels not found!");
@@ -174,7 +175,7 @@ public class DiskManager {
         return null;
     }
 
-    private static boolean writeToFile(String filePath, List<ItemOverviewModel> list) throws IOException {
+    private static boolean writeToFile(String filePath, List<IItemOverviewModel> list) throws IOException {
         FileWriter writer = null;
 
         try {

@@ -186,30 +186,23 @@ public class ImageLoader {
     public ImageContainer get(String requestUrl, ImageListener imageListener,
             int maxWidth, int maxHeight) {
         // only fulfill requests that were initiated from the main thread.
-    	//如果请求在主线程，抛异常
-        throwIfNotOnMainThread();
-        //获取图片缓存相关信息
+    	throwIfNotOnMainThread();
         final String cacheKey = getCacheKey(requestUrl, maxWidth, maxHeight);
 
         // Try to look up the request in the cache of remote images.
-      //从mCache得到bitmap对象，因此可以覆写ImageCache，完成图片的三级缓存，即在原有的LruCache添加一个软引用缓存
         Bitmap cachedBitmap = mCache.getBitmap(cacheKey);
         if (cachedBitmap != null) {
-        	 //得到缓存对象
-            // Return the cached bitmap.
+        	// Return the cached bitmap.
             ImageContainer container = new ImageContainer(cachedBitmap, requestUrl, null, null);
             imageListener.onResponse(container, true);
             return container;
         }
 
         // The bitmap did not exist in the cache, fetch it!
-        //缓存中没有数据的话，在网络上加载
         ImageContainer imageContainer =
                 new ImageContainer(null, requestUrl, cacheKey, imageListener);
-        // 首先更新该view，其指定了defaultImage
         // Update the caller to let them know that they should use the default bitmap.
         imageListener.onResponse(imageContainer, true);
-        // 根据可以去检查该请求是否已经发起过
         // Check to see if a request is already in-flight.
         BatchedImageRequest request = mInFlightRequests.get(cacheKey);
         if (request != null) {
@@ -220,12 +213,10 @@ public class ImageLoader {
 
         // The request is not already in flight. Send the new request to the network and
         // track it.
-        //如果请求曾经没有发起过的话，发送份新的网络请求
         Request<?> newRequest =
             new ImageRequest(requestUrl, new Listener<Bitmap>() {
                 @Override
                 public void onResponse(Bitmap response) {
-                	//如果请求成功
                 	onGetImageSuccess(cacheKey, response);
                 }
             }, maxWidth, maxHeight,
@@ -235,9 +226,7 @@ public class ImageLoader {
                     onGetImageError(cacheKey, error);
                 }
             });
-      //添加至请求队列中
         mRequestQueue.add(newRequest);
-      //同一添加进map集合，以方便检查该request是否正在请求网络，可以节约资源
         mInFlightRequests.put(cacheKey,
                 new BatchedImageRequest(newRequest, imageContainer));
         return imageContainer;
@@ -256,13 +245,10 @@ public class ImageLoader {
      * Handler for when an image was successfully loaded.
      * @param cacheKey The cache key that is associated with the image request.
      * @param response The bitmap that was returned from the network.
-     * 成功获取图片操作
      */
     private void onGetImageSuccess(String cacheKey, Bitmap response) {
         // cache the image that was fetched.
-    	//缓存图片
-        mCache.putBitmap(cacheKey, response);
-        // 请求完成，不需要检测
+    	mCache.putBitmap(cacheKey, response);
         // remove the request from the list of in-flight requests.
         BatchedImageRequest request = mInFlightRequests.remove(cacheKey);
 
@@ -271,7 +257,6 @@ public class ImageLoader {
             request.mResponseBitmap = response;
 
             // Send the batched response
-            //处理结果
             batchResponse(cacheKey, request);
         }
     }
@@ -442,7 +427,6 @@ public class ImageLoader {
         mBatchedResponses.put(cacheKey, request);
         // If we don't already have a batch delivery runnable in flight, make a new one.
         // Note that this will be used to deliver responses to all callers in mBatchedResponses.
-        //通过handler，发送一个操作
         if (mRunnable == null) {
             mRunnable = new Runnable() {
                 @Override
@@ -457,11 +441,9 @@ public class ImageLoader {
                             }
                             if (bir.getError() == null) {
                                 container.mBitmap = bir.mResponseBitmap;
-                              //更新结果
                                 container.mListener.onResponse(container, false);
                             } else {
-                            	//处理异常
-                                container.mListener.onErrorResponse(bir.getError());
+                            	container.mListener.onErrorResponse(bir.getError());
                             }
                         }
                     }
@@ -471,8 +453,6 @@ public class ImageLoader {
 
             };
             // Post the runnable.
-            // mHandler对应的looper是MainLooper，因此被MainLooper.loop()得到该message，故该runnable操作在主线程中执行，
-            //刷新界面布局
             mHandler.postDelayed(mRunnable, mBatchResponseDelayMs);
         }
     }

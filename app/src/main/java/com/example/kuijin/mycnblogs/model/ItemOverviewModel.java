@@ -2,10 +2,12 @@ package com.example.kuijin.mycnblogs.model;
 
 import android.text.TextUtils;
 
+import com.example.kuijin.mycnblogs.presenter.page.itemoverview.IItemOverviewPresenter;
+
 /**
  * Created by kuijin on 2016/9/15.
  */
-public class ItemOverviewModel {
+public class ItemOverviewModel implements IItemOverviewModel {
     public String getTitle() {
         return title;
     }

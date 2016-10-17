@@ -88,7 +88,6 @@ public class NetworkDispatcher extends Thread {
 		while (true) {
 			try {
 				// Take a request from the queue.
-				// 获取request对象
 				request = mQueue.take();
 			} catch (InterruptedException e) {
 				// We may have been interrupted because it was time to quit.
@@ -111,7 +110,6 @@ public class NetworkDispatcher extends Thread {
 				addTrafficStatsTag(request);
 
 				// Perform the network request.
-				// 访问网络，得到数据
 				NetworkResponse networkResponse = mNetwork
 						.performRequest(request);
 				request.addMarker("network-http-complete");
@@ -129,7 +127,6 @@ public class NetworkDispatcher extends Thread {
 				Response<?> response = request
 						.parseNetworkResponse(networkResponse);
 				request.addMarker("network-parse-complete");
-				// 写入缓存
 				// Write to cache if applicable.
 				// TODO: Only update cache metadata instead of entire record for
 				// 304s.

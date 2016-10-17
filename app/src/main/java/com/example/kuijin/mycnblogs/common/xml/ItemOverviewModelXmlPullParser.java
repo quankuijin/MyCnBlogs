@@ -3,6 +3,7 @@ package com.example.kuijin.mycnblogs.common.xml;
 import android.util.Xml;
 
 import com.example.kuijin.mycnblogs.common.config.ConfigManager;
+import com.example.kuijin.mycnblogs.model.IItemOverviewModel;
 import com.example.kuijin.mycnblogs.model.ItemOverviewModel;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -34,16 +35,16 @@ public class ItemOverviewModelXmlPullParser {
     private static final String VIEWCOUNT = "views";
     private static final String COMMENTSCOUNT = "comments";
 
-    public static List<ItemOverviewModel> getItemOverviewModels(String xmlStr, String encoding) throws XmlPullParserException, IOException {
+    public static List<IItemOverviewModel> getItemOverviewModels(String xmlStr, String encoding) throws XmlPullParserException, IOException {
         InputStream inputStream = new ByteArrayInputStream(xmlStr.getBytes());
         return getItemOverviewModels(inputStream, encoding);
     }
 
-    public static List<ItemOverviewModel> getItemOverviewModels(InputStream inputStream, String encoding) throws XmlPullParserException, IOException {
+    public static List<IItemOverviewModel> getItemOverviewModels(InputStream inputStream, String encoding) throws XmlPullParserException, IOException {
         XmlPullParser parser = Xml.newPullParser();
         parser.setInput(inputStream, encoding);
 
-        List<ItemOverviewModel> listResult = null;
+        List<IItemOverviewModel> listResult = null;
         ItemOverviewModel item = null;
         int eventType = parser.getEventType();
 

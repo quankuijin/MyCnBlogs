@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.kuijin.mycnblogs.R;
+import com.example.kuijin.mycnblogs.model.IItemOverviewModel;
 import com.example.kuijin.mycnblogs.model.ItemOverviewModel;
 import com.example.kuijin.mycnblogs.presenter.page.recyclerview.RecyclerViewAdapter;
 import com.example.kuijin.mycnblogs.view.page.recyclerview.RecyclerViewHolder;
@@ -27,7 +28,7 @@ public class TestFragment extends Fragment {
 
     private RecyclerView recyclerView;
 
-    private List<ItemOverviewModel> listModels;
+    private List<IItemOverviewModel> listModels;
 
     @Nullable
     @Override

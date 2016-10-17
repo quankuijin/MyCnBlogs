@@ -1,11 +1,7 @@
-package com.example.kuijin.mycnblogs.presenter.page;
-
-import android.support.v7.widget.RecyclerView;
-
-import com.example.kuijin.mycnblogs.view.page.recyclerview.RecyclerViewHolder;
+package com.example.kuijin.mycnblogs.presenter.page.pageFragmentPresenter;
 
 /**
- * Created by kuijin on 2016/9/15.
+ * Created by kuijin on 2016/10/17.
  */
 public interface IPageFragmentPresenter {
     void setAdapter(OnItemClickListener listener);

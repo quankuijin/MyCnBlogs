@@ -1,8 +1,6 @@
 package com.example.kuijin.mycnblogs.view.page;
 
-import android.support.v7.widget.RecyclerView;
-
-import com.example.kuijin.mycnblogs.presenter.page.PageFragmentPresenterManager;
+import com.example.kuijin.mycnblogs.presenter.page.pageFragmentPresenter.PageFragmentPresenterManager;
 
 /**
  * Created by kuijin on 2016/9/13.

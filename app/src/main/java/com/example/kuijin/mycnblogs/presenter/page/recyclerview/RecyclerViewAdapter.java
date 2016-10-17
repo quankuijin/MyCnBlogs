@@ -7,8 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.kuijin.mycnblogs.common.CnBlogsLog;
+import com.example.kuijin.mycnblogs.model.IItemOverviewModel;
 import com.example.kuijin.mycnblogs.model.ItemOverviewModel;
-import com.example.kuijin.mycnblogs.presenter.page.IPageFragmentPresenter;
+import com.example.kuijin.mycnblogs.presenter.page.pageFragmentPresenter.IPageFragmentPresenter;
 import com.example.kuijin.mycnblogs.view.page.recyclerview.RecyclerViewHolder;
 
 import java.util.ArrayList;
@@ -20,11 +21,11 @@ import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView.Adapter {
 
     private Context context;
-    private List<ItemOverviewModel> list;
+    private List<IItemOverviewModel> list;
 
     private IPageFragmentPresenter.OnItemClickListener itemClickListener;
 
-    public RecyclerViewAdapter(Context context, List<ItemOverviewModel> list, IPageFragmentPresenter.OnItemClickListener listener) {
+    public RecyclerViewAdapter(Context context, List<IItemOverviewModel> list, IPageFragmentPresenter.OnItemClickListener listener) {
         this.context = context;
         if (null == list) {
             this.list = new ArrayList<>();
@@ -49,7 +50,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof RecyclerViewHolder) {
-            ItemOverviewModel item = list.get(position);
+            IItemOverviewModel item = list.get(position);
 
             RecyclerViewHolder recyclerViewHolder = (RecyclerViewHolder) holder;
             recyclerViewHolder.bindViewHolder(item);
@@ -64,7 +65,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
         return list.size();
     }
 
-    public void addItemsToLast(List<ItemOverviewModel> items) {
+    public void addItemsToLast(List<IItemOverviewModel> items) {
         if (null == items) {
             CnBlogsLog.write("RecyclerViewAdapter", "addItemsToLast", "items is null", CnBlogsLog.LEVEL_ERROR);
             return;
@@ -81,7 +82,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
         notifyItemRangeInserted(start, count);
     }
 
-    public void addItemsToFirst(List<ItemOverviewModel> items) {
+    public void addItemsToFirst(List<IItemOverviewModel> items) {
         if (null == items) {
             CnBlogsLog.write("RecyclerViewAdapter", "addItemsToFirst", "items is null", CnBlogsLog.LEVEL_ERROR);
             return;
@@ -97,7 +98,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
         notifyItemRangeInserted(0, count);
     }
 
-    public void clearAndAddItems(List<ItemOverviewModel> items) {
+    public void clearAndAddItems(List<IItemOverviewModel> items) {
         if (null == items) {
             CnBlogsLog.write("RecyclerViewAdapter", "clearAndAddItems", "items is null", CnBlogsLog.LEVEL_ERROR);
             return;

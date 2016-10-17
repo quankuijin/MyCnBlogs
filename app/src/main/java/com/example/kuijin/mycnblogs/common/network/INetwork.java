@@ -3,6 +3,7 @@ package com.example.kuijin.mycnblogs.common.network;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
+import com.example.kuijin.mycnblogs.model.IItemOverviewModel;
 import com.example.kuijin.mycnblogs.model.ItemOverviewModel;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public interface INetwork {
                   @NonNull ResponseErrorListener errorListener);
 
     interface ResponseItemOverviewModelListener {
-        void onResponse(List<ItemOverviewModel> list);
+        void onResponse(List<IItemOverviewModel> list);
     }
 
     interface ResponseErrorListener {

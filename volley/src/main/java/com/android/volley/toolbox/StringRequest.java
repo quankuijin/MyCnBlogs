@@ -59,20 +59,20 @@ public class StringRequest extends Request<String> {
 	protected void deliverResponse(String response) {
 		mListener.onResponse(response);
 	}
-	/*完成将byte[]到String的转化,
-	 * 可能会出现字符乱码，
-	 * HttpHeaderParser.parseCharset(response.headers)方法在尚未指定是返回为ISO-8859-1，
-	 * 可以修改为utf-8*/
+
+
 	@Override
 	protected Response<String> parseNetworkResponse(NetworkResponse response) {
 		String parsed;
 		try {
-			  //将data字节数据转化为String对象
+
+
 			parsed = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
 		} catch (UnsupportedEncodingException e) {
 			parsed = new String(response.data);
 		}
-		//返回Response对象，其中该对象包含访问相关数据
+
+
 		return Response.success(parsed, HttpHeaderParser.parseCacheHeaders(response));
 	}
 }
