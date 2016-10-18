@@ -19,28 +19,15 @@ import java.util.List;
 /**
  * Created by kuijin on 2016/9/20.
  */
-public class ItemOverviewModelXmlPullParser {
-    private static final String ENTRY = "entry";
-    private static final String ID = "id";
-    private static final String TITLE = "title";
-    private static final String SUMMARY = "summary";
-    private static final String PUBLISHEDTIME = "published";
-    private static final String UPDATEDTIME = "upadted";
-    private static final String AUTHORNAME = "name";
-    private static final String AUTHORBLOG = "uri";
-    private static final String AUTHORIMAGE = "avatar";
-    private static final String BLOGURL = "link";
-    private static final String BLOGURLATTRIBUTE = "href";
-    private static final String DIGGSCOUNT = "diggs"; //推荐
-    private static final String VIEWCOUNT = "views";
-    private static final String COMMENTSCOUNT = "comments";
+public class ItemOverviewModelXmlPullParser implements IItemOverviewModelXmlPullParser {
 
-    public static List<IItemOverviewModel> getItemOverviewModels(String xmlStr, String encoding) throws XmlPullParserException, IOException {
+
+    public List<IItemOverviewModel> getItemOverviewModels(String xmlStr, String encoding) throws XmlPullParserException, IOException {
         InputStream inputStream = new ByteArrayInputStream(xmlStr.getBytes());
         return getItemOverviewModels(inputStream, encoding);
     }
 
-    public static List<IItemOverviewModel> getItemOverviewModels(InputStream inputStream, String encoding) throws XmlPullParserException, IOException {
+    public List<IItemOverviewModel> getItemOverviewModels(InputStream inputStream, String encoding) throws XmlPullParserException, IOException {
         XmlPullParser parser = Xml.newPullParser();
         parser.setInput(inputStream, encoding);
 

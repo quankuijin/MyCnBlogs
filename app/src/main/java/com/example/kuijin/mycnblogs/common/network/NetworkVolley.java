@@ -15,6 +15,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.kuijin.mycnblogs.common.CnBlogsApplication;
 import com.example.kuijin.mycnblogs.common.CnBlogsLog;
 import com.example.kuijin.mycnblogs.common.config.ConfigManager;
+import com.example.kuijin.mycnblogs.common.xml.IItemOverviewModelXmlPullParser;
 import com.example.kuijin.mycnblogs.common.xml.ItemOverviewModelXmlPullParser;
 import com.example.kuijin.mycnblogs.model.IItemOverviewModel;
 import com.example.kuijin.mycnblogs.model.ItemOverviewModel;
@@ -47,7 +48,8 @@ public class NetworkVolley implements INetwork {
     @Override
     public void getItemOverviewModels(String url,
                                       @NonNull final ResponseItemOverviewModelListener listener,
-                                      @NonNull final ResponseErrorListener errorListener) {
+                                      @NonNull final ResponseErrorListener errorListener,
+                                      @NonNull final IItemOverviewModelXmlPullParser xmlPullParser) {
         if (TextUtils.isEmpty(url)) {
             CnBlogsLog.write("NetworkVolley", "getItemOverviewModels",
                     "url is null or empty!", CnBlogsLog.LEVEL_ERROR);
@@ -84,7 +86,7 @@ public class NetworkVolley implements INetwork {
 
                         List<IItemOverviewModel> list = null;
                         try {
-                            list = ItemOverviewModelXmlPullParser.getItemOverviewModels(response, "UTF_8");
+                            list = xmlPullParser.getItemOverviewModels(response, "UTF_8");
                         } catch (XmlPullParserException e) {
                             e.printStackTrace();
                             CnBlogsLog.write(e);

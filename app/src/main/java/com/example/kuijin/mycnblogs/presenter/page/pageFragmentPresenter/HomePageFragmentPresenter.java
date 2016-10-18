@@ -9,12 +9,15 @@ import android.widget.Toast;
 
 import com.example.kuijin.mycnblogs.R;
 import com.example.kuijin.mycnblogs.common.CnBlogsLog;
+import com.example.kuijin.mycnblogs.common.GlobalInfos;
 import com.example.kuijin.mycnblogs.common.cache.CacheManager;
 import com.example.kuijin.mycnblogs.common.config.ConfigManager;
 import com.example.kuijin.mycnblogs.common.disk.DiskManager;
 import com.example.kuijin.mycnblogs.common.language.MessageInfo;
 import com.example.kuijin.mycnblogs.common.network.INetwork;
 import com.example.kuijin.mycnblogs.common.network.NetworkManager;
+import com.example.kuijin.mycnblogs.common.xml.IItemOverviewModelXmlPullParser;
+import com.example.kuijin.mycnblogs.common.xml.ItemOverviewModelXmlPullParserManager;
 import com.example.kuijin.mycnblogs.model.IItemOverviewModel;
 import com.example.kuijin.mycnblogs.presenter.page.recyclerview.RecyclerViewAdapter;
 import com.example.kuijin.mycnblogs.view.page.AbsPageFragment;
@@ -206,8 +209,10 @@ public class HomePageFragmentPresenter implements IPageFragmentPresenter {
         }
 
         url = url + "/" + pageIndex + "/" + pageSize;
+
+        IItemOverviewModelXmlPullParser xmlPullParser = ItemOverviewModelXmlPullParserManager.getXmlPullParser(GlobalInfos.FragmentTypeHomePage);
         //从网络获取信息
-        NetworkManager.getItemOverviewModels(url, listener, errorListener);
+        NetworkManager.getItemOverviewModels(url, listener, errorListener, xmlPullParser);
 
     }
 

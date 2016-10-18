@@ -3,6 +3,7 @@ package com.example.kuijin.mycnblogs.common.network;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
+import com.example.kuijin.mycnblogs.common.xml.IItemOverviewModelXmlPullParser;
 import com.example.kuijin.mycnblogs.model.IItemOverviewModel;
 import com.example.kuijin.mycnblogs.model.ItemOverviewModel;
 
@@ -14,8 +15,10 @@ import java.util.List;
 public interface INetwork {
 
     void getItemOverviewModels(String url,
-                              @NonNull ResponseItemOverviewModelListener listener,
-                              @NonNull ResponseErrorListener errorListener);
+                               @NonNull ResponseItemOverviewModelListener listener,
+                               @NonNull ResponseErrorListener errorListener,
+                               @NonNull IItemOverviewModelXmlPullParser xmlPullParser);
+
     void getImage(String url, int maxWidth, int maxHeight, Bitmap.Config config,
                   @NonNull ResponseImageListenrer listenrer,
                   @NonNull ResponseErrorListener errorListener);

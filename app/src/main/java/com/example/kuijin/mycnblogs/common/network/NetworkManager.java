@@ -9,6 +9,7 @@ import android.telephony.TelephonyManager;
 
 import com.example.kuijin.mycnblogs.common.CnBlogsApplication;
 import com.example.kuijin.mycnblogs.common.config.ConfigManager;
+import com.example.kuijin.mycnblogs.common.xml.IItemOverviewModelXmlPullParser;
 import com.example.kuijin.mycnblogs.model.ItemOverviewModel;
 
 import java.util.List;
@@ -95,10 +96,10 @@ public class NetworkManager {
         return type;
     }
 
-    public static void getItemOverviewModels(String url,
-                                                                @NonNull INetwork.ResponseItemOverviewModelListener listener,
-                                                                @NonNull INetwork.ResponseErrorListener errorListener) {
-        getINetwork().getItemOverviewModels(url, listener, errorListener);
+    public static void getItemOverviewModels(String url, @NonNull INetwork.ResponseItemOverviewModelListener listener,
+                                             @NonNull INetwork.ResponseErrorListener errorListener,
+                                             @NonNull IItemOverviewModelXmlPullParser xmlPullParser) {
+        getINetwork().getItemOverviewModels(url, listener, errorListener, xmlPullParser);
     }
 
     public static boolean canAccessWeb() {
